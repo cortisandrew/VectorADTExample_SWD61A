@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VectorConsole", "VectorConsole\VectorConsole.csproj", "{52A24808-47DD-4213-A4B7-F34C23EDCBAF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{52A24808-47DD-4213-A4B7-F34C23EDCBAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52A24808-47DD-4213-A4B7-F34C23EDCBAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52A24808-47DD-4213-A4B7-F34C23EDCBAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52A24808-47DD-4213-A4B7-F34C23EDCBAF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9CAB4556-16BB-4310-A20B-070484D989E5}
+	EndGlobalSection
+EndGlobal
