@@ -9,17 +9,22 @@ namespace VectorConsole
     {
         static void Main(string[] args)
         {
-            Program.Main(new string[] { });
+#if DEBUG
+            Console.WriteLine("Since we are timing our program, consider using the Release compilation option!");
+#endif
 
 
-            //Timing();
 
+            Timing();
+
+            Console.ReadKey();
             //LinkedList<string> myList = new LinkedList<string>();
 
             //TestLinkedList();
 
             //TestStack();
 
+            /*
             DoublyLinkedList<string> doublyLinkedList = new DoublyLinkedList<string>();
 
             doublyLinkedList.InsertFirst("D");
@@ -31,7 +36,7 @@ namespace VectorConsole
             doublyLinkedList.InsertBefore(cursor, "C2");
 
             doublyLinkedList.InsertAfter(cursor, "E");
-
+            */
         }
 
         private static void TestStack()
@@ -133,17 +138,34 @@ namespace VectorConsole
 
         private static void Timing()
         {
-            // FirstTest();
-            int numberOfOperations = 100000;
-
             // Execute once to allow for compilation
-            TimeMethodAppend(100); // C# may use JIT compilation here which slows us down considerably!
-            TimeMethodInsertAtRankZero(100);
+            _ = TimeMethodAppend(100); // C# may use JIT compilation here which slows us down considerably!
+            _ = TimeMethodInsertAtRankZero(100);
 
-            // The actual timing happens here - we avoided JIT compilation issues (because they would be handled above)
-            Console.WriteLine($"For {numberOfOperations} operations, the time taken is:");
-            Console.WriteLine($"{TimeMethodAppend(numberOfOperations)} ticks for Append");
-            Console.WriteLine($"{TimeMethodInsertAtRankZero(numberOfOperations)} ticks for InsertAtRankZero");
+            // since the time taken depends on the problem size
+            // we want to time for many problem sizes
+            int[] problemSizes = new int[] { 100, 1000, 10000, 100000 };
+
+
+            #region Time Append
+            Console.WriteLine("Timing Append:");
+            foreach (int problemSize in problemSizes)
+            {
+                double time = TimeMethodAppend(problemSize, 4);
+
+                Console.WriteLine($"{problemSize}, {time:0.##}");
+            }
+            #endregion
+
+            #region Time Insert At Rank Zero
+            Console.WriteLine("Timing InsertAtRankZero:");
+            foreach (int problemSize in problemSizes)
+            {
+                double time = TimeMethodInsertAtRankZero(problemSize, 4);
+
+                Console.WriteLine($"{problemSize}, {time:0.##}");
+            }
+            #endregion
         }
 
         private static double TimeMethodAppend(int problemSize, int repetitions = 5)
@@ -153,38 +175,48 @@ namespace VectorConsole
 
             for (int r = 0; r < repetitions; r++)
             {
-                sw.Reset();
+                #region setup
+                // Build an array based vector that is as large as the problem size
                 ArrayBasedVector<int> arrayBasedVector = new ArrayBasedVector<int>();
-
                 for (int i = 0; i < problemSize; i++)
                 {
-                    sw.Start();
                     arrayBasedVector.Append(1);
-                    sw.Stop();
                 }
+                #endregion
 
+                // usually:
+                // call method with the given problem size once...
+                sw.Restart();
+                arrayBasedVector.Append(1); // the problem size happens because the arrayBasedVector is large (it has a number of elements equal to the Problem Size)
+                sw.Stop();
+                
                 results.Add(sw.ElapsedTicks);
             }
 
             return results.Average();
         }
 
-        private static double TimeMethodInsertAtRankZero(int numberOfOperations, int repetitions = 5)
+        private static double TimeMethodInsertAtRankZero(int problemSize, int repetitions = 5)
         {
             Stopwatch sw = new Stopwatch();
             List<long> results = new List<long>(repetitions);
 
+            #region setup
+            // Build an array based vector that is as large as the problem size
+            ArrayBasedVector<int> arrayBasedVector = new ArrayBasedVector<int>();
+            for (int i = 0; i < problemSize; i++)
+            {
+                arrayBasedVector.Append(1);
+            }
+            #endregion
+
             for (int r = 0; r < repetitions; r++)
             {
-                sw.Reset();
-                ArrayBasedVector<int> arrayBasedVector = new ArrayBasedVector<int>();
-
-                for (int i = 0; i < numberOfOperations; i++)
-                {
-                    sw.Start();
-                    arrayBasedVector.InsertAtRank(0, 1);
-                    sw.Stop();
-                }
+                // usually:
+                // call method with the given problem size once...
+                sw.Restart();
+                arrayBasedVector.InsertAtRank(0, 1); // the problem size happens because the arrayBasedVector is large (it has a number of elements equal to the Problem Size)
+                sw.Stop();
 
                 results.Add(sw.ElapsedTicks);
             }

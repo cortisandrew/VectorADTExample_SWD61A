@@ -58,6 +58,7 @@ namespace VectorConsole
 
         private void InsertLast(T element)
         {
+            // Exercise!
             throw new NotImplementedException();
         }
 
